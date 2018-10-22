@@ -57,12 +57,11 @@ module.exports = class {
           return;
         }
 
-        if(results.length == 0) {
+        let total = results[0].total;
+        if( total == 0 ) {
           res({total: 0, data: []});
           return;
         }
-
-        let total = results[0].total;
 
         query += ` LIMIT ` + per_page + ` OFFSET ` + ( ( page - 1 ) * per_page );
 
