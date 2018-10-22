@@ -101,7 +101,7 @@
 
 <script>
 import { getForms } from '@/api/form';
-import { json2excel, excel2json } from 'js2excel';
+import XLSX from 'xlsx';
 
 import PictureDialog from '@/components/PictureDialog';
 import PartsDialog from '@/components/PartsDialog';
@@ -177,44 +177,17 @@ export default {
         item.email = item.user.email;
         delete item.user;
 
-        item.parts.forEach((part, idx) => {
-          Object.keys(part).forEach(key => {
-            item[key + '_' + (idx + 1)] = part[key];
-          });
+        item.parts = JSON.stringify( item.parts );
+
+        Object.keys(item).forEach(key => {
+          item[key] = item[key] + '';
         });
-        delete item.parts;
-
-        item.pictures = '';
-
-        item.pictures += window.host + item.picture1 + ' ';
-        delete item.picture1;
-        item.pictures += window.host + item.picture2 + ' ';
-        delete item.picture2;
-        item.pictures += window.host + item.picture3 + ' ';
-        delete item.picture3;
-        item.pictures += window.host + item.picture4 + ' ';
-        delete item.picture4;
-        item.pictures += window.host + item.picture5 + ' ';
-        delete item.picture5;
-        item.pictures += window.host + item.picture6 + ' ';
-        delete item.picture6;
-        item.pictures += window.host + item.picture7 + ' ';
-        delete item.picture7;
-        item.pictures += window.host + item.picture8 + ' ';
-        delete item.picture8;
       });
 
-      console.log(export_form);
-
-      try {
-        json2excel({
-            export_form,
-            name: new Date().toISOString().substr(0, 10),
-            formateDate: 'yyyy/mm/dd'
-        });
-      } catch (e) {
-          console.error('export error');
-      }
+      let ws = XLSX.utils.json_to_sheet(export_form) 
+      let wb = XLSX.utils.book_new() 
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1') 
+      XLSX.writeFile(wb, new Date().toISOString() + '.xlsx')
     }
   },
   mounted() {

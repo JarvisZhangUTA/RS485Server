@@ -8,7 +8,7 @@ import { removeToken } from '@/utils/auth';
 export default {
   mounted() {
     removeToken();
-    this.$router.push('/login');
+    window.location.href="/login";
   }
 }
 </script>

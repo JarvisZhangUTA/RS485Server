@@ -4,7 +4,10 @@
     <el-menu-item index="/forms">Forms</el-menu-item>
     <el-menu-item index="/upload">Upload</el-menu-item>
 
-    <el-menu-item index="/logout" style="float:right">Logout</el-menu-item>
+    <el-menu-item index="/logout" style="float:right">
+      Hello {{user.email}}, 
+      Logout
+    </el-menu-item>
   </el-menu>
 </template>
 

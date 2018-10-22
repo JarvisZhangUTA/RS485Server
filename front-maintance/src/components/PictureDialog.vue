@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="Pictures" :visible.sync="visible">
+  <el-dialog title="Pictures" :visible.sync="visible" :fullscreen="true">
     <div v-if="form.picture1" class="dialog-picture-container">
       <img :src="form.picture1" class="dialog-picture">
     </div>

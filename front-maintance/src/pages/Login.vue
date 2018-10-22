@@ -42,7 +42,7 @@ export default {
       login(this.email, this.password).then(res => {
         if( res.data ) {
           setToken(res.data.token);
-          this.$router.push('/forms');
+          window.location.reload();
         }
       }, err => {
         this.$message( err.response.data );

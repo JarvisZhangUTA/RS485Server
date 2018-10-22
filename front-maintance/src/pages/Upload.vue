@@ -348,7 +348,7 @@ export default {
 
       createForm(this.form).then(res => {
         this.$message('Uploaded');
-        // setTimeout(() => { window.location.reload(); }, 300)
+        setTimeout(() => { window.location.reload(); }, 300)
       }, err => {
         this.$message( err.response.data );
       });
