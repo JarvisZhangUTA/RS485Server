@@ -12,10 +12,10 @@
 
       <tbody>
         <tr v-for="item in form.parts" :key="item.id">
-          <td> {{item.part_name}} </td>
-          <td> {{item.part_number}} </td>
-          <td> {{item.incoming_type}} </td>
-          <td> {{item.outgoing_type}} </td>
+          <td data-column="Part"> {{item.part_name}} </td>
+          <td data-column="Part #"> {{item.part_number}} </td>
+          <td data-column="IN"> {{item.incoming_type}} </td>
+          <td data-column="OUT"> {{item.outgoing_type}} </td>
         </tr>
       </tbody>
     </table>

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import '@/utils/quagga_adapter';
+// import '@/utils/quagga_adapter';
 
 import jwt from 'jsonwebtoken';
 import config from '@/config';

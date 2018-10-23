@@ -4,18 +4,18 @@
     <table class="normal-table">
       <thead>
         <tr>
-          <th rowspan="3"> Date </th>
-          <th rowspan="3"> Repaired By </th>
-          <th rowspan="3"> SERIAL NUMBER </th>
-          <th rowspan="3"> UNIT MODEL </th>
+          <th rowspan="3" data-column="Date"> Date </th>
+          <th rowspan="3" data-column="Repaired By"> Repaired By </th>
+          <th rowspan="3" data-column="SERIAL NUMBER"> SERIAL NUMBER </th>
+          <th rowspan="3" data-column="UNIT MODEL"> UNIT MODEL </th>
           <th colspan="6"> FIRMWARE </th>
           <th colspan="3" rowspan="2"> OFFICE USE </th>
-          <th rowspan="3"> Fans Running </th>
-          <th rowspan="3"> Inverter Run Time </th>
-          <th rowspan="3"> Test Power </th>
-          <th rowspan="3"> AFCI Test </th>
-          <th rowspan="3"> IN/OUT parts </th>
-          <th rowspan="3"> Pictures </th>
+          <th rowspan="3" data-column="Fans Running"> Fans Running </th>
+          <th rowspan="3" data-column="Inverter Run Time"> Inverter Run Time </th>
+          <th rowspan="3" data-column="Test Power"> Test Power </th>
+          <th rowspan="3" data-column="AFCI Test"> AFCI Test </th>
+          <th rowspan="3" data-column="IN/OUT parts"> IN/OUT parts </th>
+          <th rowspan="3" data-column="Pictures"> Pictures </th>
         </tr>
 
         <tr>
@@ -28,52 +28,52 @@
 
         <tr>
           <!-- FIRMWARE -->
-          <th> OLD </th>
-          <th> NEW </th>
+          <th data-column="DSP"> OLD </th>
+          <th data-column="DSP"> NEW </th>
 
-          <th> OLD </th>
-          <th> NEW </th>
+          <th data-column="LCD"> OLD </th>
+          <th data-column="LCD"> NEW </th>
 
-          <th> OLD </th>
-          <th> NEW </th>
+          <th data-column="ARC"> OLD </th>
+          <th data-column="ARC"> NEW </th>
 
           <!-- OFFICE USE -->
-          <th> DATA Log </th>
-          <th> Count </th>
-          <th> JIRA/MT </th>
+          <th data-column="DATA Log"> DATA Log </th>
+          <th data-column="Count"> Count </th>
+          <th data-column="JIRA/MT"> JIRA/MT </th>
         </tr>
       </thead>
 
       <tbody>
         <template v-for="item in forms">
           <tr :key="'form_' + item.id">
-            <td> {{formatDate(item.date)}} </td>
-            <td> {{item.user.email}} </td>
-            <td> {{item.serial_number}} </td>
-            <td> {{item.unit_model_rate}} {{item.unit_model_type}} </td>
+            <td data-column="Date"> {{formatDate(item.date)}} </td>
+            <td data-column="Repaired By"> {{item.user.email}} </td>
+            <td data-column="Pictures"> {{item.serial_number}} </td>
+            <td data-column="UNIT Model"> {{item.unit_model_rate}} {{item.unit_model_type}} </td>
 
-            <td> {{item.old_firmware_dsp}} </td>
-            <td> {{item.new_firmware_dsp}} </td>
+            <td data-column="DSP_OLD"> {{item.old_firmware_dsp}} </td>
+            <td data-column="DSP_NEW"> {{item.new_firmware_dsp}} </td>
 
-            <td> {{item.old_firmware_lcd}} </td>
-            <td> {{item.new_firmware_lcd}} </td>
+            <td data-column="LCD_OLD"> {{item.old_firmware_lcd}} </td>
+            <td data-column="LCD_NEW"> {{item.new_firmware_lcd}} </td>
 
-            <td> {{item.old_firmware_arc}} </td>
-            <td> {{item.new_firmware_arc}} </td>
+            <td data-column="ARC_NEW"> {{item.old_firmware_arc}} </td>
+            <td data-column="ARC_NEW"> {{item.new_firmware_arc}} </td>
 
-            <td> {{item.data_log}} </td>
-            <td> {{item.count}} </td>
-            <td> {{item.jira_mt}} </td>
+            <td data-column="DATA LOG"> {{item.data_log}} </td>
+            <td data-column="Count"> {{item.count}} </td>
+            <td data-column="JIRA/MT"> {{item.jira_mt}} </td>
 
-            <td> {{item.fans_running}} </td>
-            <td> {{item.fans_inverter_run_time}} </td>
+            <td data-column="FANS Running"> {{item.fans_running}} </td>
+            <td data-column="Inverter Run Time"> {{item.fans_inverter_run_time}} </td>
 
-            <td> {{item.power_test}} </td>
-            <td> {{item.afci_test}} </td>
+            <td data-column="Testing Power"> {{item.power_test}} </td>
+            <td data-column="AFCI Test"> {{item.afci_test}} </td>
 
-            <td> {{item.parts.length}} PARTS <i class="el-icon-more table-item-icon" @click="showParts(item)"></i> </td>
+            <td data-column="Parts"> {{item.parts.length}} PARTS <i class="el-icon-more table-item-icon" @click="showParts(item)"></i> </td>
 
-            <td> {{pictureCount(item)}} PICS <i class="el-icon-picture table-item-icon" @click="showPictures(item)"></i> </td>
+            <td data-column="Pics"> {{pictureCount(item)}} PICS <i class="el-icon-picture table-item-icon" @click="showPictures(item)"></i> </td>
           </tr>
         </template>
       </tbody>
@@ -213,5 +213,47 @@ export default {
 .table-item-icon {
   float: right;
   line-height: 25px !important;
+}
+
+
+@media only screen and (max-width: 700px)  {
+	.normal-table { 
+    width: 100%; 
+    display: block; 
+	}
+
+  .normal-table thead, tbody, th, td, tr { 
+    display: block; 
+  }
+
+  .normal-table thead tr { 
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .normal-table tr { 
+    border: 1px solid #ccc; 
+  }
+
+  .normal-table td { 
+    border: none !important;
+    border-bottom: 1px solid #eee !important; 
+    position: relative;
+    padding-left: 45% !important; 
+  }
+
+  .normal-table td:before { 
+    position: absolute;
+    left: 3px;
+    width: 40%; 
+    padding-right: 10px; 
+    white-space: nowrap;
+    text-align: left !important;
+    content: attr(data-column);
+
+    color: #000;
+    font-weight: bold;
+  }
 }
 </style>
