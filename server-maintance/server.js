@@ -20,4 +20,4 @@ app.use(function (req, res, next) {
 
 const server = http.createServer(app);
 
-server.listen(3000, '0.0.0.0', function () { console.log('Server listening on port 3000!') });
+server.listen(80, '0.0.0.0', function () { console.log('Server listening on port 3000!') });
