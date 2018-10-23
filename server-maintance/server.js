@@ -18,10 +18,6 @@ app.use(function (req, res, next) {
     res.sendFile('index.html', {root: path.join(__dirname, '../front-maintance/dist/')});
 });
 
-app.get('.well-known/acme-challenge/Im9tHPL_O7AEsK8VOvpsp3PAtgMWiELIS0Irvvvh6nY', function(req, res, next) {
-    res.sendFile('acme', {root: path.join(__dirname)});
-});
-
 const server = http.createServer(app);
 
 server.listen(80, '0.0.0.0', function () { console.log('Server listening on port 3000!') });
