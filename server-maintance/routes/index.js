@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 
-router.get('/.well-known/acme-challenge/Im9tHPL_O7AEsK8VOvpsp3PAtgMWiELIS0Irvvvh6nY', function(req, res, next) {
-    res.sendFile('acme', {root: path.join(__dirname, '../')});
+router.get('/.well-known/acme-challenge/cA_YtIdgEblc7Di3MBfmji4cbS9e1ePJtz4If1tHpuo', function(req, res, next) {
+    res.sendFile('cA_YtIdgEblc7Di3MBfmji4cbS9e1ePJtz4If1tHpuo', {root: path.join(__dirname, '../')});
 });
 
 router.get('/', (req, res) => {
