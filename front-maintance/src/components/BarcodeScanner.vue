@@ -43,8 +43,8 @@ export default {
           name : "Live",
           type : "LiveStream",
           constraints: {
-            width: 300,
-            height: 300,
+            // width: 300,
+            // height: 300,
             facingMode: "environment"
           },
           target: document.querySelector('#bar-code-scanner')
