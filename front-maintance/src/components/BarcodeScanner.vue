@@ -44,14 +44,8 @@ export default {
           type : "LiveStream",
           constraints: {
             width: 300,
-            height: 100,
+            height: 300,
             facingMode: "environment"
-          },
-          area: { // defines rectangle of the detection/localization area
-            top: "0%",    // top offset
-            right: "0%",  // right offset
-            left: "0%",   // left offset
-            bottom: "0%"  // bottom offset
           },
           target: document.querySelector('#bar-code-scanner')
         },
