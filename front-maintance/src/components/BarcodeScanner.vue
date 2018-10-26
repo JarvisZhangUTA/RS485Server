@@ -85,7 +85,9 @@ export default {
 
 <style>
   #bar-code-scanner {
-    width: auto;
+    width: 70%;
+    height: 70%;
+    overflow: hidden;
     height: auto;
     position: relative;
     text-align: center;
