@@ -36,6 +36,18 @@ export default {
           halfSample: true
         },
 
+        constraints: {
+          width: 300,
+          height: 100,
+          facingMode: "environment"
+        },
+        area: { // defines rectangle of the detection/localization area
+          top: "0%",    // top offset
+          right: "0%",  // right offset
+          left: "0%",   // left offset
+          bottom: "0%"  // bottom offset
+        },
+
         numOfWorkers: 4,
         frequency: 20,
 
