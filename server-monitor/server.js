@@ -10,7 +10,6 @@ wss.on('connection', function connection(ws, req) {
     
     ws.on('message', function incoming(message) {
         console.log('receive message ' + message);
-        console.log(verified);
         try{
             message = JSON.parse(message);
 
@@ -29,9 +28,9 @@ wss.on('connection', function connection(ws, req) {
                 return;
             }
             
-            if( verified === 'user' ) {
+            if( verified === 'device' ) {
                 receive_from_device(message);
-            } else if( verified === 'device' ) {
+            } else if( verified === 'user' ) {
                 receive_from_user(message);
             }
             
