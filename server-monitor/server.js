@@ -10,6 +10,7 @@ wss.on('connection', function connection(ws, req) {
     
     ws.on('message', function incoming(message) {
         console.log('receive message ' + message);
+        console.log(verified);
         try{
             message = JSON.parse(message);
 
@@ -20,8 +21,6 @@ wss.on('connection', function connection(ws, req) {
 
             if( message.type === 'verify' ) {
                 verified = message.data;
-                console.log(message.data);
-                console.log(verified);
                 if( verified === 'user' ) {
                     users[ip] = ws;
                 } else if( verified === 'device' ) {
