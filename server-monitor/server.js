@@ -78,6 +78,7 @@ wss.on('connection', function connection(ws, req) {
      */
 
     function receive_from_device(message) {
+        console.log('receive from device');
         switch( message.type ) {
             case 'message':
                 send_message(Object.values(users), {
@@ -90,6 +91,7 @@ wss.on('connection', function connection(ws, req) {
     }
 
     function receive_from_user(message) {
+        console.log('receive from user');
         switch( message.type ) {
             case 'message':
                 if( !message.addr ) {

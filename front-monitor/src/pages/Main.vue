@@ -19,8 +19,9 @@ export default {
 
       this.ws.onopen = () => {
         this.ws.onmessage = this.onMessage;
-        
         this.ws.send(JSON.stringify({ type: 'verify', data: 'user'}));
+        this.ws.send(JSON.stringify({ type: 'users' }));
+        this.ws.send(JSON.stringify({ type: 'devices' }));
       };
     },
     onMessage( message ) {
