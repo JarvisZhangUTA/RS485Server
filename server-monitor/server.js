@@ -1,6 +1,5 @@
 const WebSocket = require('ws');
 const wss = new WebSocket.Server({ port: 8080 });
-const fs = require('fs');
 
 const devices = {};
 const users = {};
@@ -10,6 +9,7 @@ wss.on('connection', function connection(ws, req) {
     let verified = false;
     
     ws.on('message', function incoming(message) {
+        console.log('receive message ' + message);
         try{
             message = JSON.parse(message);
 
