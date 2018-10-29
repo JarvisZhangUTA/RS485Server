@@ -1,3 +1,19 @@
+/** HTTP */
+const app = express();
+const http = require('http');
+
+app.use(express.static(path.join(__dirname,'../front-monitor/dist/')));
+app.use(function (req, res, next) {
+    res.sendFile('index.html', {root: path.join(__dirname, '../front-monitor/dist/')});
+});
+
+const httpServer = http.createServer(app);
+httpServer.listen(3000, () => { 
+    console.log('HTTP Server listening on port 3000') 
+});
+
+
+/** WEB SOCKET */
 const WebSocket = require('ws');
 const wss = new WebSocket.Server({ port: 8080 });
 
@@ -67,6 +83,7 @@ wss.on('connection', function connection(ws, req) {
      * { type: 'message', addr: '', data: '' }
      * { type: 'ack', data: '' }
      * { type: 'error', data: '' }
+     * { type: 'unverified' }
      * 
      * Device Send
      * { type: 'verify', data: 'device' }
@@ -75,6 +92,7 @@ wss.on('connection', function connection(ws, req) {
      * Device Receive
      * { type: 'message', data: '' }
      * { type: 'error', data: '' }
+     * { type: 'unverified' }
      */
 
     function receive_from_device(message) {
