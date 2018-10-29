@@ -13,19 +13,19 @@ import { getToken, removeToken } from './utils/auth';
 export default {
   name: 'App',
   mounted() {
-    let token = getToken();
-    if( token ) {
-      jwt.verify(token, config.jwt_secret, (err, decoded) => {
-        if( err ) {
-          removeToken();
-          this.$router.push('/login');
-        } else {
-          this.$store.dispatch('setUser', decoded)
-        }
-      });
-    } else if( this.$route.path !== '/login' ){
-      this.$router.push('/login');
-    }
+    // let token = getToken();
+    // if( token ) {
+    //   jwt.verify(token, config.jwt_secret, (err, decoded) => {
+    //     if( err ) {
+    //       removeToken();
+    //       this.$router.push('/login');
+    //     } else {
+    //       this.$store.dispatch('setUser', decoded)
+    //     }
+    //   });
+    // } else if( this.$route.path !== '/login' ){
+    //   this.$router.push('/login');
+    // }
   }
 }
 </script>

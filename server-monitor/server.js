@@ -2,10 +2,11 @@ const WebSocket = require('ws');
 const wss = new WebSocket.Server({ port: 8080 });
 const fs = require('fs');
 
-const devices = [];
-const users = [];
+const devices = {};
+const users = {};
 
-wss.on('connection', function connection(ws) {
+wss.on('connection', function connection(ws, req) {
+    const ip = req.connection.remoteAddress;
     let verified = false;
     
     ws.on('message', function incoming(message) {
@@ -20,9 +21,9 @@ wss.on('connection', function connection(ws) {
             if( message.type === 'verify' ) {
                 verified = message.data;
                 if( verified === 'user' ) {
-                    users.push(ws);
+                    users[ip] = ws;
                 } else if( verified === 'device' ) {
-                    devices.push(ws);
+                    devices[ip] = ws;
                 }
                 return;
             }
@@ -36,22 +37,20 @@ wss.on('connection', function connection(ws) {
         } catch ( e ) {
             console.log('parse error');
             console.log(message);
+            ws.send(JSON.stringify({
+                type: 'error',
+                data: 'parse error ' + message
+            }));
         }
     });
 
     ws.on('close', function close() {
         if( verified === 'device' ) {
-            let index = devices.indexOf(ws);
-            if( index !== -1 ) {
-                devices.splice(index, 1);
-            }
+            delete devices[ip];
         }
 
         if( verified === 'user' ) {
-            let index = users.indexOf(ws);
-            if( index !== -1 ) {
-                users.splice(index, 1);
-            }
+            delete users[ip];
         }
     });
 
@@ -63,8 +62,11 @@ wss.on('connection', function connection(ws) {
      * { type: 'devices' }
      * 
      * User Receive
-     * { type: 'message_ack', data: '' }
+     * { type: 'users', data: [] }
+     * { type: 'devices', data: [] }
      * { type: 'message', addr: '', data: '' }
+     * { type: 'ack', data: '' }
+     * { type: 'error', data: '' }
      * 
      * Device Send
      * { type: 'verify', data: 'device' }
@@ -72,23 +74,68 @@ wss.on('connection', function connection(ws) {
      * 
      * Device Receive
      * { type: 'message', data: '' }
+     * { type: 'error', data: '' }
      */
 
     function receive_from_device(message) {
         switch( message.type ) {
             case 'message':
-                users.forEach(user => {
-                    user.send();
+                send_message(Object.values(users), {
+                    type: 'message',
+                    addr: ip,
+                    data: message.data
                 });
                 break;
         }
     }
 
-    function receive_from_user() {
+    function receive_from_user(message) {
+        switch( message.type ) {
+            case 'message':
+                if( !message.addr ) {
+                    send_message(ws, {
+                        type: 'error', data: 'No device addr to send'
+                    });
+                    return;
+                }
 
+                let device = devices[message.addr];
+
+                if( !device ) {
+                    send_message(ws, {
+                        type: 'error', data: 'Device not found'
+                    });
+                    return;
+                }
+                
+                send_message(device, {
+                    type: 'message', data: message.data
+                });
+                
+                send_message(ws, {
+                    type: 'ack', data: 'Message sent to ' + message.addr
+                });
+                break;
+            case 'users':
+                send_message(ws, {
+                    type: 'users', data: Object.keys(users)
+                });
+                break;
+            case 'devices':
+                send_message(ws, {
+                    type: 'devices', data: Object.keys(devices)
+                }); 
+                break;
+        }
     }
 
     function send_message(to, message) {
-        to.send(JSON.stringify( message ));
+        if( Array.isArray(to) ) {
+            to.forEach(item => {
+                item.send(JSON.stringify( message ));
+            })
+        } else {
+            to.send(JSON.stringify( message ));
+        }
     }
 });

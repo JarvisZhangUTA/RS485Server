@@ -1,7 +1,6 @@
 <template>
   <div>
-    <el-button> AAA</el-button>
-    {{$store.state.user}}
+    
   </div>
 </template>
 
@@ -9,10 +8,28 @@
 import { login } from '@/api/user';
 
 export default {
+  data() {
+    return {
+      ws: null
+    }
+  },
+  methods: {
+    init() {
+      this.ws = new WebSocket('ws://206.189.166.192:8080');
+
+      this.ws.onopen = () => {
+        this.ws.onmessage = this.onMessage;
+        
+        this.ws.send(JSON.stringify({ type: 'verify', data: 'user'}));
+      };
+    },
+    onMessage( message ) {
+      console.log('on message');
+      console.log( message );
+    }
+  },
   mounted() {
-    // login('zhangjw.uta@gmail.com', 'qgk112358').then(res => {
-    //   console.log(res);
-    // })
+    this.init();
   }
 }
 </script>
