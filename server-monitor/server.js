@@ -22,6 +22,8 @@ const wss = new WebSocket.Server({ port: 8080 });
 const devices = {};
 const users = {};
 
+const mysql = require('mysql');
+
 wss.on('connection', function connection(ws, req) {
     const ip = req.connection.remoteAddress;
     let verified = false;
@@ -106,6 +108,16 @@ wss.on('connection', function connection(ws, req) {
                     addr: ip,
                     data: message.data
                 });
+
+                const connection = mysql.createConnection({
+                    host: 'localhost',
+                    user: 'admin',
+                    password : 'qgk112358',
+                    database : 'monitor'
+                });
+                connection.connect();
+                connection.query(`INSERT INTO temp (addr, number, date) VALUES ('` + ip + `','` + message.data + `','` + new Date().toISOString().slice(0, 19).replace('T', ' ') + `')`);
+                connection.end();
                 break;
         }
     }
