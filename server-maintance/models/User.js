@@ -10,6 +10,12 @@ module.exports = class {
       password : config.db_pass,
       database : config.db_user_db
     });
+    console.log({
+      host: config.db_host,
+      user: config.db_user,
+      password : config.db_pass,
+      database : config.db_user_db
+    });
     this.connection.connect();
   }
 
