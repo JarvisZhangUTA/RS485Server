@@ -10,12 +10,6 @@ module.exports = class {
       password : config.db_pass,
       database : config.db_user_db
     });
-    console.log({
-      host: config.db_host,
-      user: config.db_user,
-      password : config.db_pass,
-      database : config.db_user_db
-    });
     this.connection.connect();
   }
 
@@ -33,6 +27,7 @@ module.exports = class {
 
       this.connection.query(query, (error, results, fields) => {
         if(error) {
+          console.log(error);
           rej(error.code + ' ' + error.sqlMessage);
           return;
         }
