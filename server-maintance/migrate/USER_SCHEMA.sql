@@ -2,12 +2,19 @@
 CREATE DATABASE IF NOT EXISTS `user`;
 USE `user`;
 
+DROP TABLE IF EXISTS `user`.`users`;
+
 CREATE TABLE IF NOT EXISTS `user`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(45) NULL,
   `password` VARCHAR(45) NULL,
   `level_id` INT NULL,
   PRIMARY KEY (`id`));
+
+INSERT INTO `user`.`users` 
+	(`email`, `password`, `level_id`) 
+VALUES 
+	('admin', 'admin', '1');
 
 DROP TABLE IF EXISTS `user`.`levels`;
 
