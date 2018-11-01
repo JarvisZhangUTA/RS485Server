@@ -196,7 +196,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .normal-table {
   font-size: 12px;
   line-height: 25px;
