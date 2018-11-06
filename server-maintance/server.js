@@ -35,11 +35,13 @@ const httpsServer = https.createServer(credentials, app);
 httpsServer.listen(443);
 
 
-const httpServer = http.createServer();
-httpServer.get('*', function(req, res) {  
+
+const redirect = express();
+redirect.get('*', function(req, res) {  
     res.redirect('https://' + req.headers.host + req.url);
 })
-httpServer.listen(8080);
+const httpServer = http.createServer(redirect);
+httpServer.listen(80);
 
 
 // const httpServer = http.createServer(app);
