@@ -31,17 +31,18 @@ app.use(function (req, res, next) {
     res.sendFile('index.html', {root: path.join(__dirname, '../front-maintance/dist/')});
 });
 
-const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
+httpsServer.listen(443);
 
-// httpServer.listen(80, () => { 
-//     console.log('HTTP Server listening on port 80') 
-// });
 
-httpsServer.listen(443, () => {
-	console.log('HTTPS Server running on port 443');
-});
+const httpServer = express.createServer();
+httpServer.get('*', function(req, res) {  
+    res.redirect('https://' + req.headers.host + req.url);
+})
+httpServer.listen(8080);
 
+
+// const httpServer = http.createServer(app);
 // httpServer.listen(3000, () => { 
 // 		console.log('HTTP Server listening on port 3000') 
 // });
