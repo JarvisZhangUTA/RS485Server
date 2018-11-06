@@ -3,7 +3,7 @@ const router = express.Router();
 const path = require('path');
 
 router.get('/.well-known/acme-challenge/:a_string', function(req, res, next) {
-    res.sendFile( a_string, {root: path.join(__dirname, '../')});
+    res.sendFile( req.params.a_string, {root: path.join(__dirname, '../')});
 });
 
 router.get('/', (req, res) => {
