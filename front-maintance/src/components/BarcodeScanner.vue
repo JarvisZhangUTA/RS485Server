@@ -57,7 +57,6 @@ export default {
             console.log(err);
             return;
           }
-          console.log("Initialization finished. Ready to start");
           Quagga.start();
           Quagga.onDetected(this.onDetected)
       });
@@ -67,12 +66,9 @@ export default {
     },
     onDetected(data) {
       if( !data ) return;
-      console.log(data);
       this.code = data.codeResult.code;
     },
     confirm() {
-      console.log('on-fonfirm');
-
       this.$emit('on-confirm', this.code);
       this.stop();
 
@@ -86,8 +82,8 @@ export default {
 <style>
   #bar-code-scanner {
     width: 100%;
-    height: calc(100vh - 110px) !important;
-    overflow: hidden;
+    height: calc(100vh - 30%) !important;
+    overflow: hidden !important;
     height: auto;
     position: relative;
     text-align: center;

@@ -241,6 +241,7 @@ export default {
     border-bottom: 1px solid #eee !important; 
     position: relative;
     padding-left: 45% !important; 
+    min-height: 20px;
   }
 
   .normal-table td:before { 

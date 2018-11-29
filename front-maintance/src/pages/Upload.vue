@@ -10,6 +10,7 @@
 
       <el-col :lg="6" :md="12" :xs="24">
         <el-select placeholder="Wire Box" v-model="form.wire_box">
+          <el-option label="No Data" :value="null"></el-option>
           <el-option label="Gen 1" value="Gen 1"></el-option>
           <el-option label="Gen 2" value="Gen 2"></el-option>
           <el-option label="Gen 3" value="Gen 3"></el-option>
@@ -102,100 +103,18 @@
       </el-col>
 
       <el-col :span="24">
-        <el-input type="textarea" :rows="5" placeholder="Repaire / Analysis" v-model="form.repair_analysis"></el-input>
-      </el-col>
-
-      <el-col :span="24">
-        <el-row>
-          <el-col :lg="6" :sm="12">
-            <div style="height: 200px; width: 100%; text-align: center; line-height: 200px; color: #C0C4CC;">
-              <a v-if="!form.picture1" class="el-icon-picture"> 
-                <label for="file-input1"> PICTURE </label> 
-                <input class="inputfile" type="file" id="file-input1" ref="file-input1" v-on:change="imageUploaded('file-input1')">
-              </a>
-              <img v-else :src="form.picture1" class="form-image">
-            </div>
-          </el-col>
-          <el-col :lg="6" :sm="12">
-            <div style="height: 200px; width: 100%; text-align: center; line-height: 200px; color: #C0C4CC;">
-              <a v-if="!form.picture2" class="el-icon-picture"> 
-                <label for="file-input2"> PICTURE </label> 
-                <input class="inputfile" type="file" id="file-input2" ref="file-input2" v-on:change="imageUploaded('file-input2')">
-              </a>
-              <img v-else :src="form.picture2" class="form-image">
-            </div>
-          </el-col>
-          <el-col :lg="6" :sm="12">
-            <div style="height: 200px; width: 100%; text-align: center; line-height: 200px; color: #C0C4CC;">
-              <a v-if="!form.picture3" class="el-icon-picture">
-                <label for="file-input3"> PICTURE </label> 
-                <input class="inputfile" type="file" id="file-input3" ref="file-input3" v-on:change="imageUploaded('file-input3')">
-              </a>
-              <img v-else :src="form.picture3" class="form-image">
-            </div>
-          </el-col>
-          <el-col :lg="6" :sm="12">
-            <div style="height: 200px; width: 100%; text-align: center; line-height: 200px; color: #C0C4CC;">
-              <a v-if="!form.picture4" class="el-icon-picture">
-                <label for="file-input4"> PICTURE </label> 
-                <input class="inputfile" type="file" id="file-input4" ref="file-input4" v-on:change="imageUploaded('file-input4')">
-              </a>
-              <img v-else :src="form.picture4" class="form-image">
-            </div>
-          </el-col>
-        </el-row>
-
-        <el-row>
-          <el-col :lg="6" :sm="12">
-            <div style="height: 200px; width: 100%; text-align: center; line-height: 200px; color: #C0C4CC;">
-              <a v-if="!form.picture5" class="el-icon-picture"> 
-                <label for="file-input5"> PICTURE </label> 
-                <input class="inputfile" type="file" id="file-input5" ref="file-input5" v-on:change="imageUploaded('file-input5')">
-              </a>
-              <img v-else :src="form.picture5" class="form-image">
-            </div>
-          </el-col>
-          <el-col :lg="6" :sm="12">
-            <div style="height: 200px; width: 100%; text-align: center; line-height: 200px; color: #C0C4CC;">
-              <a v-if="!form.picture6" class="el-icon-picture"> 
-                <label for="file-input6"> PICTURE </label> 
-                <input class="inputfile" type="file" id="file-input6" ref="file-input6" v-on:change="imageUploaded('file-input6')">
-              </a>
-              <img v-else :src="form.picture6" class="form-image">
-            </div>
-          </el-col>
-          <el-col :lg="6" :sm="12">
-            <div style="height: 200px; width: 100%; text-align: center; line-height: 200px; color: #C0C4CC;">
-              <a v-if="!form.picture7" class="el-icon-picture">
-                <label for="file-input7"> PICTURE </label> 
-                <input class="inputfile" type="file" id="file-input7" ref="file-input7" v-on:change="imageUploaded('file-input7')">
-              </a>
-              <img v-else :src="form.picture7" class="form-image">
-            </div>
-          </el-col>
-          <el-col :lg="6" :sm="12">
-            <div style="height: 200px; width: 100%; text-align: center; line-height: 200px; color: #C0C4CC;">
-              <a v-if="!form.picture8" class="el-icon-picture">
-                <label for="file-input8"> PICTURE </label> 
-                <input class="inputfile" type="file" id="file-input8" ref="file-input8" v-on:change="imageUploaded('file-input8')">
-              </a>
-              <img v-else :src="form.picture8" class="form-image">
-            </div>
-          </el-col>
-        </el-row>
-      </el-col>
-
-      <el-col :span="24">
         <table class="form-table">
           <thead>
             <tr>
               <th colspan="4"> REPLACEMENT PARTS </th>
             </tr>
             <tr>
-              <th style="width: 25%"> ITEM </th>
-              <th style="width: 25%"> PART # </th>
-              <th style="width: 25%"> IN </th>
-              <th style="width: 25%"> OUT </th>
+              <th style="width: 20%"> ITEM </th>
+              <th style="width: 20%"> PART # </th>
+              <th style="width: 15%"> IN </th>
+              <th style="width: 15%"> IN SN</th>
+              <th style="width: 15%"> OUT </th>
+              <th style="width: 15%"> IN SN</th>
             </tr>
           </thead>
           <tbody>
@@ -203,7 +122,9 @@
               <td> {{item.part_name}} </td>
               <td> {{item.part_number}} </td>
               <td> {{item.incoming_type}} </td>
+              <td> {{item.in_sn}} </td>
               <td> {{item.outgoing_type}} </td>
+              <td> {{item.out_sn}} </td>
             </tr>
 
             <tr>
@@ -216,10 +137,24 @@
                 <el-input v-model="part.part_number" placeholder="PART #"></el-input>
               </td>
               <td>
-                <el-input v-model="part.incoming_type" placeholder="IN"></el-input>
+                <el-popover ref="InPopover">
+                  <div @click="inChange('NEW')" style="font-size:12px;line-height:25px;padding:0 10px;cursor:pointer;">NEW</div>
+                  <div @click="inChange('REBUILD')" style="font-size:12px;line-height:25px;padding:0 10px;cursor:pointer;">REBUILD</div>
+                </el-popover>
+                <el-input v-model="part.incoming_type" placeholder="IN" v-popover:InPopover></el-input>
               </td>
               <td>
-                <el-input v-model="part.outgoing_type" placeholder="OUT"></el-input>
+                <el-input v-model="part.in_sn" placeholder="IN SN"></el-input>
+              </td>
+              <td>
+                <el-popover ref="OutPopover">
+                  <div @click="outChange('NEW')" style="font-size:12px;line-height:25px;padding:0 10px;cursor:pointer;">NEW</div>
+                  <div @click="outChange('REBUILD')" style="font-size:12px;line-height:25px;padding:0 10px;cursor:pointer;">REBUILD</div>
+                </el-popover>
+                <el-input v-model="part.outgoing_type" placeholder="OUT" v-popover:OutPopover></el-input>
+              </td>
+              <td>
+                <el-input v-model="part.out_sn" placeholder="OUT SN"></el-input>
               </td>
             </tr>
 
@@ -232,11 +167,34 @@
         </table>
       </el-col>
 
-      <el-col :span="12">
+      <el-col :span="24">
+        <el-input type="textarea" :rows="5" placeholder="Repaire / Analysis" v-model="form.repair_analysis"></el-input>
+      </el-col>
+
+      <el-col :span="24">
+        <div style="position: relative; min-height:115px;">
+
+          <div v-for="i in 8" :key="i" style="display: inline-block;">
+            <img v-if="form['picture' + i]" :src="form['picture' + i]" 
+              style="margin: 9px; border:1px solid #EEE; height: 95px; width: 95px;">
+          </div>
+
+          <div style="position: absolute; left: 15px; top: 10px; font-size: 14px; color: #C0C4CC;">
+            Pictures
+          </div>
+
+          <el-button style="position: absolute; right: 5px; bottom: 5px;" circle type="success">
+            <label for="file-input"> <i class="el-icon-picture"></i> </label>
+            <input class="inputfile" type="file" id="file-input" ref="file-input" v-on:change="imageUploaded()">
+          </el-button>
+        </div>
+      </el-col>
+
+      <el-col :lg="12" :xs="24">
         <div class="form-text" style="height: 30px; padding: 5px 10px; line-height: 30px;"> {{form.date}} BY {{user.email}} </div>
       </el-col>
 
-      <el-col :span="12" style="text-align: right; padding: 5px 10px;">
+      <el-col :lg="12" :xs="24" style="text-align: right; padding: 5px 10px;">
         <el-button size="mini" type="success" style="height: 30px;" @click="uploadForm"> Confirm </el-button>
       </el-col>
 
@@ -247,7 +205,6 @@
 
 <script>
 import { getParts, uploadImage, createForm } from '@/api/form';
-
 import BarcodeScanner from '@/components/BarcodeScanner';
 
 export default {
@@ -306,6 +263,14 @@ export default {
     }
   },
   methods: {
+    inChange(val) {
+      this.$refs.InPopover.doClose();
+      this.part.incoming_type = val;
+    },
+    outChange(val) {
+      this.$refs.OutPopover.doClose();
+      this.part.outgoing_type = val;
+    },
     startScan(scan_key) {
       this.scan_key = scan_key;
       this.$refs.BarcodeScanner.show();
@@ -346,7 +311,16 @@ export default {
         this.$message('Unit Model needed'); return;
       }
 
-      createForm(this.form).then(res => {
+      let form = JSON.parse( JSON.stringify( this.form ) );
+
+      form.parts.forEach(part => {
+        part.incoming_type += ' (' + part.in_sn + ')';
+        part.outgoing_type += ' (' + part.out_sn + ')';
+        delete part.in_sn;
+        delete part.out_sn;
+      });
+
+      createForm(form).then(res => {
         this.$message('Uploaded');
         setTimeout(() => { window.location.reload(); }, 300)
       }, err => {
@@ -354,39 +328,36 @@ export default {
       });
     },
     imageUploaded(ref) {
-      let file = this.$refs[ref].files[0];
+      let full = true;
+      for( let i = 1; i <= 8 && full; i++ ) {
+        if( !this.form['picture' + i] ) {
+          full = false;
+        }
+      }
+      if( full ) {
+        this.$message('At most 8 pictures.');
+        return;
+      }
+      let file = this.$refs['file-input'].files[0];
       uploadImage(file).then(res => {
         this.$message('File Uploaded');
         if( res.data.path ) {
-          switch(ref) {
-            case 'file-input1':
-              this.form.picture1 = res.data.path;
-              break;
-            case 'file-input2':
-              this.form.picture2 = res.data.path;
-              break;
-            case 'file-input3':
-              this.form.picture3 = res.data.path;
-              break;
-            case 'file-input4':
-              this.form.picture4 = res.data.path;
-              break;
-            case 'file-input5':
-              this.form.picture5 = res.data.path;
-              break;
-            case 'file-input6':
-              this.form.picture6 = res.data.path;
-              break;
-            case 'file-input7':
-              this.form.picture7 = res.data.path;
-              break;
-            case 'file-input8':
-              this.form.picture8 = res.data.path;
-              break;
+          for( let i = 1; i <= 8; i++ ) {
+            if( !this.form['picture' + i] ) {
+              this.form['picture' + i] = res.data.path;
+              const input = this.$refs['file-input'];
+              input.type = 'text';
+              input.type = 'file';
+              return;
+            }
           }
         }
       }, err => {
         this.$message( err.response.data );
+
+        const input = this.$refs['file-input'];
+        input.type = 'text';
+        input.type = 'file';
       });
     }
   },
@@ -420,8 +391,8 @@ export default {
 }
 
 .upload-form-card .inputfile {
-	width: 0.1px;
-	height: 0.1px;
+	width: 0;
+	height: 0;
 	opacity: 0;
 	overflow: hidden;
 	position: absolute;
