@@ -143,23 +143,23 @@
                   <div @click="inChange('NEW')" style="font-size:12px;line-height:25px;padding:0 10px;cursor:pointer;">NEW</div>
                   <div @click="inChange('REBUILD')" style="font-size:12px;line-height:25px;padding:0 10px;cursor:pointer;">REBUILD</div>
                 </el-popover>
-                <el-input v-model="part.incoming_type" placeholder="IN" v-popover:InPopover></el-input>
+                <el-input class="input-no-padding" v-model="part.incoming_type" placeholder="IN" v-popover:InPopover></el-input>
               </td>
               <td>
                 <el-popover ref="OutPopover">
                   <div @click="outChange('NEW')" style="font-size:12px;line-height:25px;padding:0 10px;cursor:pointer;">NEW</div>
                   <div @click="outChange('REBUILD')" style="font-size:12px;line-height:25px;padding:0 10px;cursor:pointer;">REBUILD</div>
                 </el-popover>
-                <el-input v-model="part.outgoing_type" placeholder="OUT" v-popover:OutPopover></el-input>
+                <el-input class="input-no-padding" v-model="part.outgoing_type" placeholder="OUT" v-popover:OutPopover></el-input>
               </td>
             </tr>
 
             <tr>
               <td>
-                <el-input v-model="part.in_sn" placeholder="IN SN"></el-input>
+                <el-input class="input-no-padding" v-model="part.in_sn" placeholder="IN SN"></el-input>
               </td>
               <td>
-                <el-input v-model="part.out_sn" placeholder="OUT SN"></el-input>
+                <el-input class="input-no-padding" v-model="part.out_sn" placeholder="OUT SN"></el-input>
               </td>
             </tr>
 
@@ -455,5 +455,9 @@ export default {
 }
 .upload-form-card .form-table tr td:last-child, .upload-form-card .form-table tr th:last-child {
   border-right: 0;
+}
+
+.input-no-padding .el-input__inner{
+  padding: 0 !important;
 }
 </style>
