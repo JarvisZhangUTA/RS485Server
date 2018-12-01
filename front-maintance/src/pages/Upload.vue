@@ -131,12 +131,12 @@
 
             <tr>
               <td rowspan="2">
-                <el-select placeholder="Unit Model" v-model="part.part_name">
+                <el-select class="input-no-padding" placeholder="Unit Model" v-model="part.part_name">
                   <el-option v-for="(item, idx) in parts" :key="idx" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </td>
               <td rowspan="2">
-                <el-input v-model="part.part_number" placeholder="PART #"></el-input>
+                <el-input class="input-no-padding" v-model="part.part_number" placeholder="PART #"></el-input>
               </td>
               <td>
                 <el-popover ref="InPopover">
