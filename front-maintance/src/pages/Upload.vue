@@ -188,7 +188,7 @@
             Pictures
           </div>
 
-          <el-button style="position: absolute; right: 5px; bottom: 5px;" circle type="success">
+          <el-button style="position: absolute; right: 5px; bottom: 5px;" :disabled="img_uploading" circle type="success">
             <label for="file-input"> <i :class="img_uploading ? 'el-icon-loading':'el-icon-picture'"></i> </label>
             <input class="inputfile" type="file" id="file-input" ref="file-input" v-on:change="imageUploaded()">
           </el-button>
