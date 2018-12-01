@@ -189,7 +189,7 @@
           </div>
 
           <el-button style="position: absolute; right: 5px; bottom: 5px;" circle type="success">
-            <label for="file-input"> <i class="el-icon-picture"></i> </label>
+            <label for="file-input"> <i :class="img_uploading ? 'el-icon-loading':'el-icon-picture'"></i> </label>
             <input class="inputfile" type="file" id="file-input" ref="file-input" v-on:change="imageUploaded()">
           </el-button>
         </div>
@@ -231,7 +231,9 @@ export default {
         outgoing_type: ''
       },
 
-      scan_keyL : '',
+      scan_key: '',
+
+      img_uploading: false,
 
       form: {
         user_id: '',
@@ -344,8 +346,14 @@ export default {
         return;
       }
       let file = this.$refs['file-input'].files[0];
+      if( !file ) {
+        this.$message('No file found.');
+        return;
+      }
+      this.img_uploading = true;
       uploadImage(file).then(res => {
         this.$message('File Uploaded');
+        this.img_uploading = false;
         if( res.data.path ) {
           for( let i = 1; i <= 8; i++ ) {
             if( !this.form['picture' + i] ) {
