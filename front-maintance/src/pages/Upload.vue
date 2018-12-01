@@ -112,28 +112,30 @@
               <th style="width: 20%"> ITEM </th>
               <th style="width: 20%"> PART # </th>
               <th style="width: 15%"> IN </th>
-              <th style="width: 15%"> IN SN</th>
               <th style="width: 15%"> OUT </th>
-              <th style="width: 15%"> IN SN</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, idx) in form.parts" :key="idx">
-              <td> {{item.part_name}} </td>
-              <td> {{item.part_number}} </td>
-              <td> {{item.incoming_type}} </td>
-              <td> {{item.in_sn}} </td>
-              <td> {{item.outgoing_type}} </td>
-              <td> {{item.out_sn}} </td>
-            </tr>
+            <template v-for="(item, idx) in form.parts">
+              <tr :key="idx">
+                <td rowspan="2"> {{item.part_name}} </td>
+                <td rowspan="2"> {{item.part_number}} </td>
+                <td> {{item.incoming_type}} </td>
+                <td> {{item.outgoing_type}} </td>
+              </tr>
+              <tr :key="idx">
+                <td> {{item.in_sn}} </td>
+                <td> {{item.out_sn}} </td>
+              </tr>
+            </template>
 
             <tr>
-              <td>
+              <td rowspan="2">
                 <el-select placeholder="Unit Model" v-model="part.part_name">
                   <el-option v-for="(item, idx) in parts" :key="idx" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </td>
-              <td>
+              <td rowspan="2">
                 <el-input v-model="part.part_number" placeholder="PART #"></el-input>
               </td>
               <td>
@@ -144,14 +146,17 @@
                 <el-input v-model="part.incoming_type" placeholder="IN" v-popover:InPopover></el-input>
               </td>
               <td>
-                <el-input v-model="part.in_sn" placeholder="IN SN"></el-input>
-              </td>
-              <td>
                 <el-popover ref="OutPopover">
                   <div @click="outChange('NEW')" style="font-size:12px;line-height:25px;padding:0 10px;cursor:pointer;">NEW</div>
                   <div @click="outChange('REBUILD')" style="font-size:12px;line-height:25px;padding:0 10px;cursor:pointer;">REBUILD</div>
                 </el-popover>
                 <el-input v-model="part.outgoing_type" placeholder="OUT" v-popover:OutPopover></el-input>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <el-input v-model="part.in_sn" placeholder="IN SN"></el-input>
               </td>
               <td>
                 <el-input v-model="part.out_sn" placeholder="OUT SN"></el-input>
