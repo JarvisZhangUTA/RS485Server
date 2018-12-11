@@ -17,6 +17,8 @@ const connection = mysql.createConnection({
 connection.connect();
 
 connection.query('SELECT * FROM temp', (error, results, fields) => {
+  let all_commands = [];
+
   results.forEach(result => {
     console.log(result.id);
     let commands = commandManager.splitCommand(result.number);
@@ -24,9 +26,15 @@ connection.query('SELECT * FROM temp', (error, results, fields) => {
     commands.forEach(command => {
       command.device_id = 'UNKNOW';
       command.date = result.date;
-      
-      let command_model = new CommandModel(command);
-      command_model.save((err, data) => { if(err) console.log(err); });
+      all_commands.push( command );
     });
+  });
+
+  CommandModel.collection.insert(all_commands, function (err, docs) {
+    if (err){ 
+        return console.error(err);
+    } else {
+      console.log("Multiple documents inserted to Collection");
+    }
   });
 });
