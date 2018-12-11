@@ -4,20 +4,22 @@ const CommandModel = require('../../models/Command.model');
 module.exports = class WebSocketManager {
 
   constructor(websocket) {
+    let that = this;
+
     this.devices = {};
     this.users = {};
 
     this.websocket = websocket;
-    this.websocket.on('connection', this.onConnect);
+    this.websocket.on('connection', (ws, req) => { that.onConnect(ws, req); });
 
     this.commandManager = new CommandManager();
   }
 
   onConnect(ws, req) {
-    let that = this;
-
+    console.log( this );
     ws.on('message', (message) => {
-      message = that.parseMessage(message);
+      console.log(this);
+      message = this.parseMessage(message);
       if( !message ) {
         return;
       }
@@ -27,20 +29,20 @@ module.exports = class WebSocketManager {
 
       switch( message.data ) {
         case 'user':
-          that.users[message.id] = ws;
+          this.users[message.id] = ws;
           ws.on('message', (message) => { 
-            message = that.parseMessage(message);
+            message = this.parseMessage(message);
             if(message) {
-              that.onUserMessage(ws, message);
+              this.onUserMessage(ws, message);
             }
           });
           break;
         case 'device':
-          that.devices[message.id] = ws;
+          this.devices[message.id] = ws;
           ws.on('message', (message) => { 
-            message = that.parseMessage(message);
+            message = this.parseMessage(message);
             if(message) {
-              that.onDeviceMessage(ws, message);
+              this.onDeviceMessage(ws, message);
             }
           });
           break;
@@ -49,15 +51,15 @@ module.exports = class WebSocketManager {
 
     ws.on('close', () => {
 
-      Object.keys( that.users ).forEach(key => {
-        if( that.users[key] == ws ) {
-          delete that.users[key];
+      Object.keys( this.users ).forEach(key => {
+        if( this.users[key] == ws ) {
+          delete this.users[key];
         }
       });
 
-      Object.keys( that.devices ).forEach(key => {
-        if( that.devices[key] == ws ) {
-          delete that.devices[key];
+      Object.keys( this.devices ).forEach(key => {
+        if( this.devices[key] == ws ) {
+          delete this.devices[key];
         }
       });
 
