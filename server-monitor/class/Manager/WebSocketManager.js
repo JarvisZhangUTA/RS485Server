@@ -14,8 +14,10 @@ module.exports = class WebSocketManager {
   }
 
   onConnect(ws, req) {
+    let that = this;
+
     ws.on('message', (message) => {
-      message = this.parseMessage(message);
+      message = that.parseMessage(message);
       if( !message ) {
         return;
       }
@@ -25,20 +27,20 @@ module.exports = class WebSocketManager {
 
       switch( message.data ) {
         case 'user':
-          this.users[message.id] = ws;
+          that.users[message.id] = ws;
           ws.on('message', (message) => { 
-            message = this.parseMessage(message);
+            message = that.parseMessage(message);
             if(message) {
-              this.onUserMessage(ws, message);
+              that.onUserMessage(ws, message);
             }
           });
           break;
         case 'device':
-          this.devices[message.id] = ws;
+          that.devices[message.id] = ws;
           ws.on('message', (message) => { 
-            message = this.parseMessage(message);
+            message = that.parseMessage(message);
             if(message) {
-              this.onDeviceMessage(ws, message);
+              that.onDeviceMessage(ws, message);
             }
           });
           break;
@@ -46,14 +48,19 @@ module.exports = class WebSocketManager {
     });
 
     ws.on('close', () => {
-      let index1 = this.users.indexOf(ws);
-      if( index1 > -1 ) {
-        this.users.splice(index1, 1);
-      }
-      let index2 = this.devices.indexOf(ws);
-      if( index2 > -1 ) {
-        this.devices.splice(index2, 1);
-      }
+
+      Object.keys( that.users ).forEach(key => {
+        if( that.users[key] == ws ) {
+          delete that.users[key];
+        }
+      });
+
+      Object.keys( that.devices ).forEach(key => {
+        if( that.devices[key] == ws ) {
+          delete that.devices[key];
+        }
+      });
+
     });
   }
 
