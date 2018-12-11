@@ -35,6 +35,8 @@
 const CommandManager = require('./class/Manager/CommandManager');
 const commandManager = new CommandManager();
 
+const mysql = require('mysql');
+
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'admin',
