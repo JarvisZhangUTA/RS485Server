@@ -5,6 +5,8 @@ const CommandSchema = mongoose.Schema({
     date: Date,
     type: String,
     original_command: String
+},{ 
+    strict: false 
 });
 const CommandModel = mongoose.model('CommandModel', CommandSchema);
 module.exports = CommandModel;

@@ -1,3 +1,6 @@
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/monitor');
+
 const CommandManager = require('./class/Manager/CommandManager');
 const commandManager = new CommandManager();
 
@@ -17,10 +20,13 @@ connection.query('SELECT * FROM temp', (error, results, fields) => {
   results.forEach(result => {
     console.log(result.id);
     let commands = commandManager.splitCommand(result.number);
+
     commands.forEach(command => {
       command.device_id = 'UNKNOW';
       command.date = result.date;
-      new CommandModel(command).save();
+      
+      let command_model = new CommandModel(command);
+      command_model.save((err, data) => { if(err) console.log(err); });
     });
   });
 });
