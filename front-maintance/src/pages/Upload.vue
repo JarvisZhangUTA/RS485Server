@@ -112,49 +112,54 @@
               <th style="width: 20%"> ITEM </th>
               <th style="width: 20%"> PART # </th>
               <th style="width: 15%"> IN </th>
-              <th style="width: 15%"> IN SN</th>
               <th style="width: 15%"> OUT </th>
-              <th style="width: 15%"> IN SN</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, idx) in form.parts" :key="idx">
-              <td> {{item.part_name}} </td>
-              <td> {{item.part_number}} </td>
-              <td> {{item.incoming_type}} </td>
-              <td> {{item.in_sn}} </td>
-              <td> {{item.outgoing_type}} </td>
-              <td> {{item.out_sn}} </td>
-            </tr>
+            <template v-for="(item, idx) in form.parts">
+              <tr :key="idx">
+                <td rowspan="2"> {{item.part_name}} </td>
+                <td rowspan="2"> {{item.part_number}} </td>
+                <td> {{item.incoming_type}} </td>
+                <td> {{item.outgoing_type}} </td>
+              </tr>
+              <tr :key="idx">
+                <td> {{item.in_sn}} </td>
+                <td> {{item.out_sn}} </td>
+              </tr>
+            </template>
 
             <tr>
-              <td>
-                <el-select placeholder="Unit Model" v-model="part.part_name">
+              <td rowspan="2">
+                <el-select class="input-no-padding" placeholder="Unit Model" v-model="part.part_name">
                   <el-option v-for="(item, idx) in parts" :key="idx" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </td>
-              <td>
-                <el-input v-model="part.part_number" placeholder="PART #"></el-input>
+              <td rowspan="2">
+                <el-input class="input-no-padding" v-model="part.part_number" placeholder="PART #"></el-input>
               </td>
               <td>
                 <el-popover ref="InPopover">
                   <div @click="inChange('NEW')" style="font-size:12px;line-height:25px;padding:0 10px;cursor:pointer;">NEW</div>
                   <div @click="inChange('REBUILD')" style="font-size:12px;line-height:25px;padding:0 10px;cursor:pointer;">REBUILD</div>
                 </el-popover>
-                <el-input v-model="part.incoming_type" placeholder="IN" v-popover:InPopover></el-input>
-              </td>
-              <td>
-                <el-input v-model="part.in_sn" placeholder="IN SN"></el-input>
+                <el-input class="input-no-padding" v-model="part.incoming_type" placeholder="IN" v-popover:InPopover></el-input>
               </td>
               <td>
                 <el-popover ref="OutPopover">
                   <div @click="outChange('NEW')" style="font-size:12px;line-height:25px;padding:0 10px;cursor:pointer;">NEW</div>
                   <div @click="outChange('REBUILD')" style="font-size:12px;line-height:25px;padding:0 10px;cursor:pointer;">REBUILD</div>
                 </el-popover>
-                <el-input v-model="part.outgoing_type" placeholder="OUT" v-popover:OutPopover></el-input>
+                <el-input class="input-no-padding" v-model="part.outgoing_type" placeholder="OUT" v-popover:OutPopover></el-input>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <el-input class="input-no-padding" v-model="part.in_sn" placeholder="IN SN"></el-input>
               </td>
               <td>
-                <el-input v-model="part.out_sn" placeholder="OUT SN"></el-input>
+                <el-input class="input-no-padding" v-model="part.out_sn" placeholder="OUT SN"></el-input>
               </td>
             </tr>
 
@@ -183,8 +188,8 @@
             Pictures
           </div>
 
-          <el-button style="position: absolute; right: 5px; bottom: 5px;" circle type="success">
-            <label for="file-input"> <i class="el-icon-picture"></i> </label>
+          <el-button style="position: absolute; right: 5px; bottom: 5px;" :disabled="img_uploading" circle type="success">
+            <label for="file-input"> <i :class="img_uploading ? 'el-icon-loading':'el-icon-picture'"></i> </label>
             <input class="inputfile" type="file" id="file-input" ref="file-input" v-on:change="imageUploaded()">
           </el-button>
         </div>
@@ -226,7 +231,9 @@ export default {
         outgoing_type: ''
       },
 
-      scan_keyL : '',
+      scan_key: '',
+
+      img_uploading: false,
 
       form: {
         user_id: '',
@@ -339,8 +346,14 @@ export default {
         return;
       }
       let file = this.$refs['file-input'].files[0];
+      if( !file ) {
+        this.$message('No file found.');
+        return;
+      }
+      this.img_uploading = true;
       uploadImage(file).then(res => {
         this.$message('File Uploaded');
+        this.img_uploading = false;
         if( res.data.path ) {
           for( let i = 1; i <= 8; i++ ) {
             if( !this.form['picture' + i] ) {
@@ -450,5 +463,9 @@ export default {
 }
 .upload-form-card .form-table tr td:last-child, .upload-form-card .form-table tr th:last-child {
   border-right: 0;
+}
+
+.input-no-padding .el-input__inner{
+  padding: 0 !important;
 }
 </style>
