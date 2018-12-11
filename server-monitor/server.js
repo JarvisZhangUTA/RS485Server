@@ -12,8 +12,10 @@ mongoose.connect('mongodb://localhost/monitor');
 const restRouter = require('./routes/rest');
 const indexRouter = require('./routes/index');
 
-app.use('/', indexRouter);
+app.use(express.static(path.join(__dirname,'../front-monitor/dist/')));
+
 app.use('/api', restRouter);
+app.use('/', indexRouter);
 
 const httpServer = http.createServer(app);
 httpServer.listen(3000, () => { console.log('HTTP Server listening on port 3000') });
