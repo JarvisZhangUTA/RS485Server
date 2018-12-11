@@ -16,9 +16,7 @@ module.exports = class WebSocketManager {
   }
 
   onConnect(ws, req) {
-    console.log( this );
     ws.on('message', (message) => {
-      console.log(this);
       message = this.parseMessage(message);
       if( !message ) {
         return;
