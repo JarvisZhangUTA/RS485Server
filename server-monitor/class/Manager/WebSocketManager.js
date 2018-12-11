@@ -1,4 +1,4 @@
-const CommandManager = require('./class/Manager/CommandManager');
+const CommandManager = require('./CommandManager');
 const CommandModel = require('../../models/Command.model');
 
 module.exports = class WebSocketManager {
