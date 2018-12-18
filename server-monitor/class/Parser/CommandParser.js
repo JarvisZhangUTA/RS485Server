@@ -19,16 +19,15 @@ module.exports = class CommandParser {
     switch( command.length ) {
       case 16:
         return this.parseRequestCommand( command );
-      case 290:
-        return this.parseResponseCommand( command );
+      // case 290:
       default:
-        return this.parseUnknowCommand( command );
+        return this.parseResponseCommand( command );
     }
   }
 
   static parseResponseCommand( command ) {
     let parsed_command = {
-      type: 'INFO',
+      type: 'RESPONSE',
       original_command: command
     };
     
@@ -100,13 +99,6 @@ module.exports = class CommandParser {
   static parseRequestCommand( command ) {
     return {
       type: 'REQUEST',
-      original_command: command
-    };
-  }
-
-  static parseUnknowCommand( command ) {
-    return {
-      type: 'UNKNOW',
       original_command: command
     };
   }

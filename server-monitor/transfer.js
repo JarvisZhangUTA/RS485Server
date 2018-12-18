@@ -20,11 +20,10 @@ connection.query('SELECT * FROM temp', (error, results, fields) => {
   let all_commands = [];
 
   results.forEach(result => {
-    console.log(result.id);
     let commands = commandManager.splitCommand(result.number);
 
     commands.forEach(command => {
-      command.device_id = 'UNKNOW';
+      command.device_id = '';
       command.date = result.date;
       all_commands.push( command );
     });
