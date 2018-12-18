@@ -5,7 +5,7 @@ const router = express.Router();
 
 const CommandModel = require('../models/Command.model');
 
-router.get('/commands', function(req, res) {
+router.get('/commands', async function(req, res) {
   let page = req.query.page ? +req.query.page : 1;
   let per_page = req.query.per_page ? +req.query.per_page : 10;
 
