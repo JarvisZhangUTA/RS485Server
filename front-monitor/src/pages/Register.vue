@@ -9,13 +9,15 @@
         <el-form-item label="Password">
           <el-input v-model="password" type="password"></el-input>
         </el-form-item>
-        <el-form-item>
-          <el-button style="width:100%" type="success" @click="confirm"> 
-            Login <i v-if="loading" class="el-icon-loading"></i>
-          </el-button>
+        <el-form-item label="Confirm Password">
+          <el-input v-model="confirm_password" type="password"></el-input>
         </el-form-item>
+        <el-form-item label="Invitation code">
+          <el-input v-model="invitation_code"></el-input>
+        </el-form-item>
+
         <el-form-item>
-          <el-button style="width:100%" @click="register"> Register </el-button>
+          <el-button style="width:100%" type="success" @click="confirm"> Register </el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -23,16 +25,16 @@
 </template>
 
 <script>
-import { login } from '@/api/user';
+import { register } from '@/api/user';
 import { getToken, setToken } from '@/utils/auth';
 
 export default {
   data() {
     return {
-      loading: false,
-
       email: '',
-      password: ''
+      password: '',
+      confirm_password: '',
+      invitation_code: ''
     }
   },
   methods: {
@@ -45,21 +47,23 @@ export default {
         this.$message('Password needed');
         return;
       }
+      if( this.password !== this.confirm_password ) {
+        this.$message('Password not match');
+        return;
+      }
+      if( !this.invitation_code ) {
+        this.$message('Invitation code needed');
+        return;
+      }
       
-      this.loading = true;
-      login(this.email, this.password).then(res => {
-        this.loading = false;
+      register(this.email, this.password, this.invitation_code).then(res => {
         if( res.data ) {
           setToken(res.data.token);
           window.location.reload();
         }
       }, err => {
-        this.loading = false;
         this.$message( err.response.data );
       });
-    },
-    register() {
-      this.$router.push('/register');
     }
   },
   mounted() {

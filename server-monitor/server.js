@@ -6,16 +6,20 @@ const path = require('path');
 const app = express();
 const http = require('http');
 
+app.use(express.static(path.join(__dirname,'../front-monitor/dist/')));
+
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/monitor');
 
-const restRouter = require('./routes/rest');
-const indexRouter = require('./routes/index');
+const userRouter = require('./routes/user');
+app.use('/api/users', userRouter);
 
-app.use(express.static(path.join(__dirname,'../front-monitor/dist/')));
+const commandRouter = require('./routes/command');
+app.use('/api/commands', commandRouter);
 
-app.use('/api', restRouter);
-app.use('/', indexRouter);
+app.use(function (req, res, next) {
+  res.sendFile('index.html', {root: path.join(__dirname, '../front-monitor/dist')});
+});
 
 const httpServer = http.createServer(app);
 httpServer.listen(3000, () => { console.log('HTTP Server listening on port 3000') });

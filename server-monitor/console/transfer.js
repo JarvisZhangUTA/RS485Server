@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/monitor');
 
-const CommandManager = require('./class/Manager/CommandManager');
+const CommandManager = require('../class/Manager/CommandManager');
 const commandManager = new CommandManager();
 
 const mysql = require('mysql');
 
-const CommandModel = require('./models/Command.model');
+const CommandModel = require('../models/Command.model');
 
 const connection = mysql.createConnection({
   host: 'localhost',

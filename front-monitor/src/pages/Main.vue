@@ -1,5 +1,5 @@
 <template>
-  <el-container style="height: calc(100vh);">
+  <el-container style="height: calc(100vh - 65px);">
     <el-container>
       <el-aside width="300px" style="border-right: 1px solid #DCDFE6;">
         
@@ -69,18 +69,24 @@ export default {
       new_message: ''
     }
   },
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    }
+  },
   methods: {
     init() {
-      this.ws = new WebSocket('ws://206.189.166.192:8080');
+      this.ws = new WebSocket(`ws://${window.location.host}:8080`)
 
       this.ws.onopen = () => {
         this.ws.onmessage = this.onMessage;
-        this.ws.send(JSON.stringify({ type: 'verify', data: 'user', id: new Date()}));
+        this.ws.send(JSON.stringify({ type: 'verify', data: 'user', id: this.user.id, email: this.user.email }));
         this.ws.send(JSON.stringify({ type: 'users' }));
         this.ws.send(JSON.stringify({ type: 'devices' }));
       };
     },
     onMessage( message ) {
+      console.log( message );
       if( !message || !message.data ) return;
       try {
         message = JSON.parse(message.data);

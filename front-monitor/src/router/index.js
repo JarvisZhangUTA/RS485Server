@@ -3,7 +3,9 @@ import Router from 'vue-router'
 
 import Main from '@/pages/Main'
 import Login from '@/pages/Login';
-import List from '@/pages/List';
+import Register from '@/pages/Register';
+import Invitation from '@/pages/User/Invitation';
+import List from '@/pages/Command/List';
 
 Vue.use(Router)
 
@@ -11,7 +13,9 @@ export default new Router({
   routes: [
     { path: '/', name: 'Main', component: Main },
     { path: '/login', name: 'Login', component: Login },
-    { path: '/list', name: 'List', component: List },
+    { path: '/register', name: 'Register', component: Register },
+    { path: '/user/invitation', component: Invitation },
+    { path: '/list', component: List },
     { path: '*', redirect: '/' }
   ],
   mode: 'history'

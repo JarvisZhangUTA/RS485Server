@@ -42,4 +42,15 @@ module.exports = class StrHelper {
         res += String.fromCharCode(parseInt(str.substr(i, 2), 16));
     return res;
   }
+
+  static makeId(len) {
+    var text = "";
+    var possible = "0123456789";
+
+    for (var i = 0; i < len; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
+  };
+
 }
