@@ -76,7 +76,7 @@ export default {
   },
   methods: {
     init() {
-      this.ws = new WebSocket(`ws://${window.location.host}:8080`)
+      this.ws = new WebSocket(`ws://${window.location.hostname}:8080`)
 
       this.ws.onopen = () => {
         this.ws.onmessage = this.onMessage;
