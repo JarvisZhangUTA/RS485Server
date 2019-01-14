@@ -25,8 +25,6 @@ module.exports = class WebSocketManager {
         return;
       }
 
-      console.log(message)
-
       switch( message.data ) {
         case 'user':
           this.users[message.id] = ws;
