@@ -22,6 +22,7 @@ module.exports = class WebSocketManager {
         return;
       }
       if( message.type !== 'verify' ) {
+        this.sendMessage(ws, {type: 'unverified'})
         return;
       }
 
