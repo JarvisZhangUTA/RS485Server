@@ -152,8 +152,11 @@ module.exports = class WebSocketManager {
       case 'message':
         let device_id = Object.keys(this.devices).find(key => this.devices[key] === ws);
         let commands = this.commandManager.splitCommand( message.data );
-
-        console.log('Receive data from device: ' + commands.length);
+        
+        console.log('Receive data from device: ');
+        console.log(message);
+        console.log('Parsed to');
+        console.log(commands);
 
         commands.forEach(command => {
           command.device_id = device_id;
