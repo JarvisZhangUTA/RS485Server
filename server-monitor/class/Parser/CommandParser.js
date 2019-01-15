@@ -93,6 +93,12 @@ module.exports = class CommandParser {
     parsed_command.ac_capacitance = StrHelper.str2Hex(command.substr(282, 4), 4)[0];
     parsed_command.pdc = StrHelper.str2Hex(command.substr(286, 4), 4)[0] * 0.1;
 
+    Object.keys(parsed_command).forEach(key => {
+      if (typeof(parsed_command[key]) === 'number' && (parsed_command[key] + '').indexOf('.') > 0) {
+        parsed_command[key] = parsed_command[key].toFixed(2);
+      }
+    });
+
     return parsed_command;
   }
 

@@ -21,29 +21,23 @@ module.exports = class WebSocketManager {
       if( !message ) {
         return;
       }
-      if( message.type !== 'verify' ) {
-        this.sendMessage(ws, {type: 'unverified'})
-        return;
-      }
 
-      switch( message.data ) {
-        case 'user':
-          this.users[message.id] = ws;
-          ws.on('message', (message) => { 
-            message = this.parseMessage(message);
-            if(message) {
-              this.onUserMessage(ws, message);
-            }
-          });
+      switch (message.type) {
+        case 'verify':
+          if (message.data === 'user') {
+            ws.verify = 'user';
+          } else if(message.data === 'device') {
+            ws.verify = 'device';
+          }
           break;
-        case 'device':
-          this.devices[message.id] = ws;
-          ws.on('message', (message) => { 
-            message = this.parseMessage(message);
-            if(message) {
-              this.onDeviceMessage(ws, message);
-            }
-          });
+        default:
+          if (!ws.verify) {
+            this.sendMessage(ws, {type: 'unverified'});
+          } else if (ws.verify === 'user') {
+            this.onUserMessage(ws, message);
+          } else if (ws.verify === 'device') {
+            this.onDeviceMessage(ws, message);
+          }
           break;
       }
     });
@@ -102,6 +96,7 @@ module.exports = class WebSocketManager {
    */
 
   onUserMessage(ws, message) {
+    console.log('On User Message ' + message.type);
     switch( message.type ) {
       case 'message':
           if( !message.device_id ) {
@@ -148,16 +143,11 @@ module.exports = class WebSocketManager {
   }
 
   onDeviceMessage(ws, message) {
+    console.log('On Device message ' + message.type);
     switch( message.type ) {
       case 'message':
         let device_id = Object.keys(this.devices).find(key => this.devices[key] === ws);
         let commands = this.commandManager.splitCommand( message.data );
-        
-        console.log('Receive data from device: ');
-        console.log(message);
-        console.log('Parsed to');
-        console.log(commands);
-
         commands.forEach(command => {
           command.device_id = device_id;
           command.date = new Date();
