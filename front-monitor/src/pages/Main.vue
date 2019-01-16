@@ -120,7 +120,7 @@ export default {
         this.$message('No Message set'); return;
       }
 
-      this.ws.send(JSON.stringify({ type: 'message', data: this.new_message, addr: this.cur_device}));
+      this.ws.send(JSON.stringify({ type: 'message', data: this.new_message, device_id: this.cur_device}));
 
       this.new_message = '';
       this.$message('Message sent');
