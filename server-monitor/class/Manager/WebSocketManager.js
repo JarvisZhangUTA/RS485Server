@@ -26,8 +26,10 @@ module.exports = class WebSocketManager {
         case 'verify':
           if (message.data === 'user') {
             ws.verify = 'user';
+            this.users[ message.id ] = ws;
           } else if(message.data === 'device') {
             ws.verify = 'device';
+            this.devices[ message.id ] = ws;
           }
           break;
         default:
