@@ -14,9 +14,9 @@ export default new Router({
     { path: '/', name: 'Main', component: Main },
     { path: '/login', name: 'Login', component: Login },
     { path: '/register', name: 'Register', component: Register },
-    { path: '/user/invitation', component: Invitation },
-    { path: '/list', component: List },
-    { path: '*', redirect: '/' }
+    { path: '/user/invitation', name:'Invitation', component: Invitation },
+    { path: '/list', name:'List', component: List },
+    { path: '*', name: 'Main', redirect: '/' }
   ],
   mode: 'history'
 })
