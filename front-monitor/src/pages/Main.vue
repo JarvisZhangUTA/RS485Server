@@ -86,11 +86,10 @@ export default {
       };
     },
     onMessage( message ) {
-      console.log( message );
       if( !message || !message.data ) return;
       try {
         message = JSON.parse(message.data);
-
+        console.log( message );
         switch( message.type ) {
           case 'users':
             this.users = message.data;
