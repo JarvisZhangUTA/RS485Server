@@ -5,7 +5,7 @@ const DeviceSchema = mongoose.Schema({
     mac: String,
     secret: String,
     verified: Boolean,
-    user_id: String
+    last_updated: Date
 },{ 
     strict: true 
 });

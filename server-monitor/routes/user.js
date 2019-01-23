@@ -38,11 +38,25 @@ router.post('/invitations', async function(req, res) {
     return res.status(400).send('Authorization fail.');
   }
 
-  const invitation = new InvitationCodeModel({
+  const invitation_data = {
     code: StrHelper.makeId(8),
     generate_user: decoded.id,
-    active_user: ''
-  });
+    active_user: '',
+    permission: {
+      can_send_request: false,
+      can_upgrade: false
+    }
+  };
+
+  if (req.query && req.query.can_send_request === 'true') {
+    invitation_data.permission.can_send_request = true;
+  }
+
+  if (req.query && req.query.can_upgrade === 'true') {
+    invitation_data.permission.can_upgrade = true;
+  }
+
+  const invitation = new InvitationCodeModel(invitation_data);
 
   invitation.save();
   

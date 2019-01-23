@@ -19,13 +19,48 @@ module.exports = class CommandParser {
     switch( command.length ) {
       case 16:
         return this.parseRequestCommand( command );
-      // case 290:
+      case 34:
+        return this.parseResponse34Command( command );
+      case 290:
+        return this.parseResponse290Command( command );
       default:
-        return this.parseResponseCommand( command );
+        return this.parseUnknowCommand( command );
     }
   }
 
-  static parseResponseCommand( command ) {
+  static parseUnknowCommand( command ) {
+    return {
+      type: 'UNKNOW',
+      original_command: command
+    }
+  }
+
+  static parseResponse34Command( command ) {
+    let parsed_command = {
+      type: 'RESPONSE',
+      original_command: command
+    }
+
+    parsed_command.device_address = command.substr(0, 2)
+    parsed_command.function_code = command.substr(2, 2)
+    parsed_command.register_count = StrHelper.str2Hex(command.substr(4, 2))[0];
+    parsed_command.upv1 = StrHelper.str2Hex(command.substr(6, 2), 2)[0] * 0.1;
+    parsed_command.upv2 = StrHelper.str2Hex(command.substr(8, 2), 2)[0] * 0.1;
+    parsed_command.upv3 = StrHelper.str2Hex(command.substr(10, 2), 2)[0] * 0.1;
+    parsed_command.lpv1 = StrHelper.str2Hex(command.substr(12, 2), 2)[0] * 0.1;
+    parsed_command.lpv2 = StrHelper.str2Hex(command.substr(14, 2), 2)[0] * 0.1;
+    parsed_command.lpv3 = StrHelper.str2Hex(command.substr(16, 2), 2)[0] * 0.1;
+
+    Object.keys(parsed_command).forEach(key => {
+      if (typeof(parsed_command[key]) === 'number' && (parsed_command[key] + '').indexOf('.') > 0) {
+        parsed_command[key] = parsed_command[key].toFixed(2);
+      }
+    });
+
+    return parsed_command;
+  }
+
+  static parseResponse290Command( command ) {
     let parsed_command = {
       type: 'RESPONSE',
       original_command: command
